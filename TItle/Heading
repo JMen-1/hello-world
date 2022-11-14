@@ -8,3 +8,54 @@
     <h1>&lt;h1&gt; element</h1>
   </body>
 </html>
+-- A.HOW MANY MOVIES DOES OUR STAFF RENT EVERY MONTH?
+-- B.DETAILS TABLE
+DROP TABLE IF EXISTS employee_monthly_rentals;	
+	CREATE TABLE employee_monthly_rentals		(
+		rental_id integer PRIMARY KEY,
+		staff_id integer,
+		first_name varchar,
+		last_name varchar,
+		store_id smallint,
+		amount numeric(5,2),
+		rental_date TIMESTAMP
+);
+-- B.DISPLAYING THE DETAILS TABLE
+SELECT * FROM employee_monthly_rentals;
+
+-- B.SUMMARY TABLE
+DROP TABLE IF EXISTS monthly_rentals_summary;
+CREATE TABLE monthly_rentals_summary	(
+	staff_id integer PRIMARY KEY,
+	store_id smallint,
+	monthly_rentals integer,
+	monthly_amount numeric(5,2)
+	
+);
+
+-- B.DISPLAYING THE SUMMARY TABLE
+SELECT * FROM monthly_rentals_summary;
+
+
+-- C.EXTRACTING THE DATA FROM THE DATABSE
+INSERT INTO employee_monthly_rentals(
+	rental_id,
+	staff_id,
+	first_name,
+	last_name,
+	store_id,
+	amount,
+	rental_date
+)	
+SELECT
+	r.rental_id,
+	s.staff_id,
+	s.first_name,
+	s.last_name,
+	s.store_id,
+	r.rental_date
+FROM rental AS r
+INNER JOIN staff AS s ON s.staff_id = r.staff_id;
+
+SELECT * FROM employee_monthly_rentals;
+	
